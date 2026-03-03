@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}Player Statistics - CricketHub{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="fas fa-users"></i> Player Statistics</h1>
+    <div class="search-box">
+        <form action="{{ url_for('player_stats') }}" method="GET">
+            <input type="text" name="search" placeholder="Search players..." value="{{ search_query }}">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+</div>
+
+<div class="stats-container">
+    <div class="stats-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="batsman">Batsmen</button>
+        <button class="filter-btn" data-filter="bowler">Bowlers</button>
+        <button class="filter-btn" data-filter="all-rounder">All-rounders</button>
+        <button class="filter-btn" data-filter="wicket-keeper">Wicket-keepers</button>
+    </div>
+
+    <div class="players-grid">
+        {% for player in players %}
+        <div class="player-card" data-role="{{ player.role|lower|replace(' ', '-') }}">
+            <div class="player-header">
+                <div class="player-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="player-basic-info">
+                    <h3>{{ player.name }}</h3>
+                    <span class="player-country">{{ player.country }}</span>
+                    <span class="role-badge {{ player.role|lower|replace(' ', '-') }}">{{ player.role }}</span>
+                </div>
+            </div>
+            
+            <div class="player-quick-stats">
+                <div class="quick-stat">
+                    <span class="stat-label">Matches</span>
+                    <span class="stat-value">45</span>
+                </div>
+                <div class="quick-stat">
+                    <span class="stat-label">Avg</span>
+                    <span class="stat-value">42.5</span>
+                </div>
+                <div class="quick-stat">
+                    <span class="stat-label">SR</span>
+                    <span class="stat-value">138.2</span>
+                </div>
+            </div>
+            
+            <a href="{{ url_for('player_detail', player_id=player.id) }}" class="btn btn-outline">
+                View Profile <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="top-performers-section">
+    <h2>Top Performers</h2>
+    <div class="performers-tabs">
+        <div class="tab active" onclick="switchTab('batting')">Batting</div>
+        <div class="tab" onclick="switchTab('bowling')">Bowling</div>
+    </div>
+    
+    <div id="batting" class="tab-content active">
+        <table class="stats-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Player</th>
+                    <th>Runs</th>
+                    <th>Average</th>
+                    <th>Strike Rate</th>
+                    <th>100s</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="rank-badge gold">1</span></td>
+                    <td>Virat Kohli</td>
+                    <td>13,848</td>
+                    <td>57.32</td>
+                    <td>93.58</td>
+                    <td>50</td>
+                </tr>
+                <tr>
+                    <td><span class="rank-badge silver">2</span></td>
+                    <td>Rohit Sharma</td>
+                    <td>10,709</td>
+                    <td>49.12</td>
+                    <td>91.35</td>
+                    <td>31</td>
+                </tr>
+                <tr>
+                    <td><span class="rank-badge bronze">3</span></td>
+                    <td>Steve Smith</td>
+                    <td>5,770</td>
+                    <td>44.38</td>
+                    <td>85.42</td>
+                    <td>12</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div id="bowling" class="tab-content">
+        <table class="stats-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Player</th>
+                    <th>Wickets</th>
+                    <th>Average</th>
+                    <th>Economy</th>
+                    <th>5W</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="rank-badge gold">1</span></td>
+                    <td>Jasprit Bumrah</td>
+                    <td>237</td>
+                    <td>24.12</td>
+                    <td>4.62</td>
+                    <td>8</td>
+                </tr>
+                <tr>
+                    <td><span class="rank-badge silver">2</span></td>
+                    <td>Pat Cummins</td>
+                    <td>215</td>
+                    <td>26.45</td>
+                    <td>4.89</td>
+                    <td>6</td>
+                </tr>
+                <tr>
+                    <td><span class="rank-badge bronze">3</span></td>
+                    <td>Trent Boult</td>
+                    <td>211</td>
+                    <td>25.78</td>
+                    <td>5.12</td>
+                    <td>7</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

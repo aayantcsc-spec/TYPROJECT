@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cricbuzz-Style Cricket App</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <header class="top-nav">
+    <button id="menuToggle" class="menu-toggle">☰</button>
+    <div class="brand">CricView</div>
+    <nav id="topMenu" class="menu">
+      <a href="index.html">Live</a>
+      <a href="index.html#recent">Recent</a>
+      <a href="index.html#upcoming">Upcoming</a>
+      <a href="pages/series.html">Series</a>
+      <a href="index.html#news">News</a>
+      <a href="pages/player.html">Live Player Data</a>
+      <a href="pages/team-management.html">Team Management</a>
+      <a href="pages/leaderboard.html">Leaderboard</a>
+    </nav>
+    <div>
+      <button class="icon-btn notification-dot" title="Match Alerts">🔔</button>
+      <button class="icon-btn theme-toggle" title="Toggle Theme">🌓</button>
+      <button class="icon-btn" title="Profile">👤</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="toolbar">
+      <input id="globalSearch" type="text" placeholder="Search Player, Team, Series" />
+      <select id="formatFilter">
+        <option>All</option>
+        <option>Test</option>
+        <option>ODI</option>
+        <option>T20</option>
+      </select>
+      <a class="btn" href="pages/team-management.html">Fantasy Teams</a>
+      <a class="btn" href="pages/leaderboard.html">Leaderboard</a>
+      <a class="btn" href="pages/points-table.html">Points Table</a>
+      <a class="btn" href="pages/prediction.html">Prediction Module</a>
+    </section>
+
+    <section id="live">
+      <div class="section-title">
+        <h2>Live Matches</h2>
+        <span class="muted" id="liveLastUpdated">Updating...</span>
+      </div>
+      <div id="liveGrid" class="grid"></div>
+    </section>
+
+    <section id="recent">
+      <div class="section-title"><h2>Recent Matches</h2></div>
+      <div id="recentGrid" class="grid"></div>
+    </section>
+
+    <section id="upcoming">
+      <div class="section-title"><h2>Upcoming Matches</h2></div>
+      <div id="upcomingGrid" class="grid"></div>
+    </section>
+
+    <section id="news">
+      <div class="section-title">
+        <h2>News & Articles</h2>
+        <span class="muted" id="newsLastUpdated">Updating...</span>
+      </div>
+      <div id="newsGrid" class="row"></div>
+    </section>
+
+    <section>
+      <div class="section-title"><h2>Match Highlights</h2></div>
+      <div class="row">
+        <article class="card"><h3>Top Catches Compilation</h3><p class="muted">Best fielding moments this week.</p></article>
+        <article class="card"><h3>Final Over Thrillers</h3><p class="muted">Clutch finishes from recent tournaments.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

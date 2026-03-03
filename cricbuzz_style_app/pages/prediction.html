@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prediction Module</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+  <header class="top-nav">
+    <a class="brand" href="../index.html">CricView</a>
+    <nav class="menu" id="topMenu"><a href="prediction.html">Prediction</a><a href="match.html">Match</a><a href="points-table.html">Points Table</a></nav>
+    <button class="icon-btn theme-toggle">🌓</button>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Prediction Module (UI + Logic)</h2>
+      <form id="predictionForm" class="row">
+        <select id="tournamentGenderFilter">
+          <option value="all">All Tournaments</option>
+          <option value="men">Male Tournaments</option>
+          <option value="women">Female Tournaments</option>
+        </select>
+        <select id="tournamentSelect">
+          <option value="all">All Tournaments</option>
+        </select>
+        <select id="teamASelect">
+          <option value="">Select Team A</option>
+        </select>
+        <select id="teamBSelect">
+          <option value="">Select Team B</option>
+        </select>
+        <input id="overs" type="number" min="0" max="50" value="12" placeholder="Overs completed" />
+        <input id="wickets" type="number" min="0" max="10" value="3" placeholder="Wickets lost" />
+        <input id="currentRR" type="number" step="0.1" value="7.8" placeholder="Current RR" />
+        <input id="requiredRR" type="number" step="0.1" value="8.5" placeholder="Required RR" />
+        <input id="target" type="number" min="0" value="176" placeholder="Target" />
+        <label><input id="battingFirst" type="checkbox" /> Team batting first</label>
+        <label><input id="powerplayStrong" type="checkbox" checked /> Strong powerplay</label>
+        <button class="btn" type="submit">Run Prediction</button>
+      </form>
+      <p id="predictionContext" class="muted">Choose any tournament and teams to run prediction.</p>
+      <div class="quick-actions">
+        <button id="autoFillLiveBtn" class="btn" type="button">Auto-Fill from Live Match</button>
+        <button id="runTournamentBtn" class="btn" type="button">Run for Tournament Matches</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>Win Probability Bar</h3>
+      <div class="progress-wrap"><div id="winProbabilityBar" class="progress-bar"></div></div>
+      <p id="winProbabilityValue" class="muted">0%</p>
+      <p id="teamWinSplit" class="muted">Team A: 0% · Team B: 0%</p>
+    </section>
+
+    <section class="row">
+      <article class="card">
+        <h3>Momentum Indicator</h3>
+        <p id="momentumText" class="muted">Run model to view momentum state.</p>
+        <div class="sparkline">
+          <div class="spark" data-momentum style="height:32%"></div>
+          <div class="spark" data-momentum style="height:42%"></div>
+          <div class="spark" data-momentum style="height:36%"></div>
+          <div class="spark" data-momentum style="height:54%"></div>
+          <div class="spark" data-momentum style="height:48%"></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Match Pressure Meter</h3>
+        <div class="progress-wrap"><div class="progress-bar" style="width:50%"></div></div>
+        <p id="pressureMeterValue" class="muted">50%</p>
+        <p class="muted">Turning point indicator responds to RR gap and wickets.</p>
+      </article>
+    </section>
+
+    <section class="card">
+      <h3>Performance Graph</h3>
+      <div class="sparkline">
+        <div class="spark" style="height:25%"></div>
+        <div class="spark" style="height:45%"></div>
+        <div class="spark" style="height:40%"></div>
+        <div class="spark" style="height:70%"></div>
+        <div class="spark" style="height:65%"></div>
+        <div class="spark" style="height:80%"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>Tournament Predictions (All Teams)</h3>
+      <p id="tournamentPredictionInfo" class="muted">Run the tournament prediction to generate probabilities for available matches.</p>
+      <div id="tournamentPredictions" class="grid"></div>
+    </section>
+  </main>
+
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>

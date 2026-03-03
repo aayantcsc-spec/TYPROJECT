@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Cricket Hub{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-cricket-bat-ball"></i>
+            <span>CricketHub</span>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}active{% endif %}">
+                <i class="fas fa-home"></i> Home
+            </a></li>
+            <li><a href="{{ url_for('live_scores') }}" class="{% if request.endpoint == 'live_scores' %}active{% endif %}">
+                <i class="fas fa-live"></i> Live Scores
+            </a></li>
+            <li><a href="{{ url_for('match_prediction') }}" class="{% if request.endpoint == 'match_prediction' %}active{% endif %}">
+                <i class="fas fa-chart-line"></i> Predictions
+            </a></li>
+            <li><a href="{{ url_for('player_stats') }}" class="{% if request.endpoint == 'player_stats' %}active{% endif %}">
+                <i class="fas fa-user"></i> Players
+            </a></li>
+            <li><a href="{{ url_for('team_management') }}" class="{% if request.endpoint == 'team_management' %}active{% endif %}">
+                <i class="fas fa-users"></i> Fantasy
+            </a></li>
+            <li><a href="{{ url_for('leaderboard') }}" class="{% if request.endpoint == 'leaderboard' %}active{% endif %}">
+                <i class="fas fa-trophy"></i> Leaderboard
+            </a></li>
+            <li><a href="{{ url_for('news') }}" class="{% if request.endpoint == 'news' %}active{% endif %}">
+                <i class="fas fa-newspaper"></i> News
+            </a></li>
+            <li><a href="{{ url_for('videos') }}" class="{% if request.endpoint == 'videos' %}active{% endif %}">
+                <i class="fas fa-video"></i> Videos
+            </a></li>
+        </ul>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>CricketHub</h3>
+                <p>Your ultimate destination for cricket live scores, predictions, and fantasy cricket.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{{ url_for('live_scores') }}">Live Scores</a></li>
+                    <li><a href="{{ url_for('match_prediction') }}">Predictions</a></li>
+                    <li><a href="{{ url_for('team_management') }}">Fantasy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 CricketHub. Powered by CricketData.org & YouTube API</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

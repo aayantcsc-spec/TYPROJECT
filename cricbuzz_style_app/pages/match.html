@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Match Detail Page</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+  <header class="top-nav">
+    <a class="brand" href="../index.html">CricView</a>
+    <nav class="menu" id="topMenu">
+      <a href="match.html">Match</a>
+      <a href="player.html">Player</a>
+      <a href="team.html">Team</a>
+      <a href="prediction.html">Prediction</a>
+    </nav>
+    <div><button class="icon-btn theme-toggle">🌓</button></div>
+  </header>
+
+  <main class="container" data-tabs-wrapper>
+    <section class="card">
+      <h2>Match Summary Header</h2>
+      <div class="row">
+        <div class="panel">
+          <h3>Team Information Panel</h3>
+          <p id="matchTeams" class="muted">Loading teams...</p>
+          <p id="matchStatus" class="muted">Match Status: Loading...</p>
+        </div>
+        <div class="panel">
+          <h3>Match Info</h3>
+          <p id="matchVenue" class="muted">Venue: Loading...</p>
+          <p id="matchDate" class="muted">Date: Loading...</p>
+          <p id="matchFormat" class="muted">Format: Loading...</p>
+        </div>
+      </div>
+      <div class="quick-actions">
+        <button class="btn">Share</button>
+        <button class="btn">Follow</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="tabs">
+        <button class="tab active" data-tab="livePanel">Live</button>
+        <button class="tab" data-tab="scorecardPanel">Scorecard</button>
+        <button class="tab" data-tab="commentaryPanel">Commentary</button>
+        <button class="tab" data-tab="statsPanel">Stats</button>
+        <button class="tab" data-tab="lineupsPanel">Lineups</button>
+      </div>
+
+      <div id="livePanel" data-tab-panel>
+        <h3>Live</h3>
+        <p id="livePanelText" class="muted">Fetching real-time match feed...</p>
+      </div>
+      <div id="scorecardPanel" data-tab-panel style="display:none">
+        <h3>Scorecard</h3>
+        <p class="muted">Scorecard UI section placeholder.</p>
+      </div>
+      <div id="commentaryPanel" data-tab-panel style="display:none">
+        <h3>Commentary</h3>
+        <p class="muted">Ball-by-ball commentary UI section placeholder.</p>
+      </div>
+      <div id="statsPanel" data-tab-panel style="display:none">
+        <h3>Stats</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Player</th><th>Impact</th><th>Phase</th></tr></thead>
+            <tbody>
+              <tr><td>Top Batter</td><td>High</td><td>Middle Overs</td></tr>
+              <tr><td>Top Bowler</td><td>Medium</td><td>Powerplay</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div id="lineupsPanel" data-tab-panel style="display:none">
+        <h3>Lineups</h3>
+        <div class="row">
+          <div class="card"><h4>Team A XI</h4><p class="muted">Squad preview layout</p></div>
+          <div class="card"><h4>Team B XI</h4><p class="muted">Squad preview layout</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>

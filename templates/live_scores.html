@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}Live Scores - CricketHub{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="fas fa-broadcast-tower"></i> Live Scores</h1>
+    <div class="auto-refresh">
+        <span class="refresh-indicator">
+            <i class="fas fa-sync-alt fa-spin"></i> Auto-updating
+        </span>
+        <span class="last-updated">Last updated: Just now</span>
+    </div>
+</div>
+
+<div class="scores-container">
+    <!-- Live Matches -->
+    <section class="score-section">
+        <h2 class="section-title">
+            <span class="live-dot"></span> Live Now
+        </h2>
+        <div class="detailed-matches-grid">
+            {% for match in live_matches %}
+            <div class="detailed-match-card live-pulse">
+                <div class="match-status-bar">
+                    <span class="match-type">{{ match.matchType }}</span>
+                    <span class="live-status">● LIVE</span>
+                </div>
+                <div class="match-content">
+                    <div class="team-block">
+                        <div class="team-flag">🏏</div>
+                        <div class="team-details">
+                            <h3>{{ match.teams.home.name }}</h3>
+                            <div class="score-main">{{ match.teams.home.score }}</div>
+                            {% if match.teams.home.overs %}
+                            <div class="overs">{{ match.teams.home.overs }} ov</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="match-center">
+                        <div class="vs-badge">VS</div>
+                        <div class="match-status-text">{{ match.status }}</div>
+                    </div>
+                    <div class="team-block">
+                        <div class="team-flag">🏏</div>
+                        <div class="team-details">
+                            <h3>{{ match.teams.away.name }}</h3>
+                            <div class="score-main">{{ match.teams.away.score }}</div>
+                            {% if match.teams.away.overs %}
+                            <div class="overs">{{ match.teams.away.overs }} ov</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="match-footer">
+                    <div class="venue-info">
+                        <i class="fas fa-map-marker-alt"></i> {{ match.venue }}
+                    </div>
+                    <div class="series-info">
+                        <i class="fas fa-trophy"></i> {{ match.series }}
+                    </div>
+                    <a href="{{ url_for('match_detail', match_id=match.id) }}" class="btn btn-small">
+                        Scorecard <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <i class="fas fa-moon"></i>
+                <h3>No Live Matches</h3>
+                <p>Check back later or view upcoming fixtures</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Upcoming Matches -->
+    <section class="score-section">
+        <h2 class="section-title">
+            <i class="fas fa-calendar-alt"></i> Upcoming Matches
+        </h2>
+        <div class="upcoming-matches-list">
+            {% for match in upcoming_matches %}
+            <div class="upcoming-match-card">
+                <div class="match-datetime">
+                    <div class="match-date">{{ match.date }}</div>
+                    <div class="match-time">{{ match.time }}</div>
+                </div>
+                <div class="match-teams-info">
+                    <span class="team-name">{{ match.team1 }}</span>
+                    <span class="vs-text">vs</span>
+                    <span class="team-name">{{ match.team2 }}</span>
+                </div>
+                <div class="match-details">
+                    <span class="format-badge">{{ match.series }}</span>
+                    <span class="venue-small"><i class="fas fa-map-marker-alt"></i> {{ match.venue }}</span>
+                </div>
+                <button class="reminder-btn" onclick="setReminder('{{ match.id }}')">
+                    <i class="fas fa-bell"></i> Remind Me
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Recent Results -->
+    <section class="score-section">
+        <h2 class="section-title">
+            <i class="fas fa-check-circle"></i> Recent Results
+        </h2>
+        <div class="results-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Match</th>
+                        <th>Result</th>
+                        <th>Series</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for match in recent_matches %}
+                    <tr>
+                        <td>
+                            <div class="match-teams-cell">
+                                <span>{{ match.teams.home.name }}</span>
+                                <span class="score-small">{{ match.teams.home.score }}</span>
+                                <span class="vs-divider">-</span>
+                                <span class="score-small">{{ match.teams.away.score }}</span>
+                                <span>{{ match.teams.away.name }}</span>
+                            </div>
+                        </td>
+                        <td><span class="result-badge">{{ match.result }}</span></td>
+                        <td>{{ match.series }}</td>
+                        <td>{{ match.date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+{% endblock %}

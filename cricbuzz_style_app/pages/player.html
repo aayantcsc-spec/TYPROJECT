@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Player Statistics</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+  <header class="top-nav">
+    <a class="brand" href="../index.html">CricView</a>
+    <nav class="menu" id="topMenu"><a href="player.html">Player</a><a href="team.html">Team</a><a href="team-management.html">Team Management</a><a href="leaderboard.html">Leaderboard</a></nav>
+    <button class="icon-btn theme-toggle">🌓</button>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Live Player Statistics</h2>
+      <div class="row">
+        <select id="playerGenderFilter">
+          <option value="all">All Cricketers</option>
+          <option value="men">Men</option>
+          <option value="women">Women</option>
+        </select>
+        <select id="playerSelect">
+          <option value="">Select a player</option>
+        </select>
+        <button class="btn" id="loadPlayerStatsBtn" type="button">Load Real-Time Player Data</button>
+      </div>
+      <p id="playerHeaderInfo" class="muted">Choose a player to fetch real-time profile and statistics from live API.</p>
+    </section>
+
+    <section class="row">
+      <article class="card">
+        <h3>Career Stats</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Metric</th><th>Value</th></tr>
+            </thead>
+            <tbody id="playerStatsBody">
+              <tr><td colspan="2" class="muted">No player selected.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+      <article class="card">
+        <h3>Recent Performance</h3>
+        <p id="playerRecentPerformance" class="muted">Recent form will appear after selecting a player.</p>
+        <h3>Batting/Bowling Style</h3>
+        <p id="playerStyles" class="muted">Style information will appear here.</p>
+      </article>
+    </section>
+
+    <section class="row">
+      <article class="card">
+        <h3>Player Comparison Tool</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Metric</th><th>Player A</th><th>Player B</th></tr></thead>
+            <tbody>
+              <tr><td>Consistency</td><td>High</td><td>Medium</td></tr>
+              <tr><td>Powerplay Impact</td><td>Medium</td><td>High</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+      <article class="card">
+        <h3>Player Ranking View</h3>
+        <ol id="playerRankingList">
+          <li class="muted">Load players to see ranking snapshot.</li>
+        </ol>
+      </article>
+    </section>
+  </main>
+
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>

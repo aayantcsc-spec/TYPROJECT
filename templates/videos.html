@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Cricket Videos - CricketHub{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="fab fa-youtube"></i> Cricket Videos</h1>
+    <div class="video-search">
+        <form action="{{ url_for('videos') }}" method="GET">
+            <input type="text" name="q" placeholder="Search videos..." value="{{ search_query }}">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+</div>
+
+<div class="videos-categories">
+    <a href="?q=cricket+highlights" class="cat-btn {% if 'highlights' in search_query %}active{% endif %}">Highlights</a>
+    <a href="?q=cricket+interviews" class="cat-btn {% if 'interviews' in search_query %}active{% endif %}">Interviews</a>
+    <a href="?q=cricket+analysis" class="cat-btn {% if 'analysis' in search_query %}active{% endif %}">Analysis</a>
+    <a href="?q=cricket+funny+moments" class="cat-btn {% if 'funny' in search_query %}active{% endif %}">Funny Moments</a>
+    <a href="?q=cricket+training" class="cat-btn {% if 'training' in search_query %}active{% endif %}">Training</a>
+</div>
+
+<div class="videos-grid-large">
+    {% for video in videos %}
+    <div class="video-card-large">
+        <div class="video-embed">
+            <iframe 
+                src="{{ video.embed_url }}" 
+                frameborder="0" 
+                allowfullscreen
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        <div class="video-details">
+            <h3>{{ video.title }}</h3>
+            <p class="video-desc">{{ video.description }}</p>
+            <div class="video-meta">
+                <span class="channel"><i class="fas fa-user"></i> {{ video.channel }}</span>
+                <span class="date"><i class="fas fa-calendar"></i> {{ video.published_at }}</span>
+            </div>
+            <a href="{{ video.url }}" target="_blank" class="btn btn-youtube">
+                <i class="fab fa-youtube"></i> Watch on YouTube
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="featured-channels">
+    <h2>Featured Channels</h2>
+    <div class="channels-grid">
+        <div class="channel-card">
+            <i class="fas fa-play-circle"></i>
+            <h4>ICC</h4>
+            <p>Official ICC Channel</p>
+        </div>
+        <div class="channel-card">
+            <i class="fas fa-play-circle"></i>
+            <h4>ESPN Cricinfo</h4>
+            <p>Match Analysis & News</p>
+        </div>
+        <div class="channel-card">
+            <i class="fas fa-play-circle"></i>
+            <h4>Star Sports</h4>
+            <p>Indian Cricket Coverage</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

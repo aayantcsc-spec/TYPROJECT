@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fantasy Leaderboard</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+  <header class="top-nav">
+    <a class="brand" href="../index.html">CricView</a>
+    <nav class="menu" id="topMenu">
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="team-management.html">Team Management</a>
+      <a href="prediction.html">Prediction</a>
+      <a href="points-table.html">Points Table</a>
+    </nav>
+    <button class="icon-btn theme-toggle">🌓</button>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Leaderboard</h2>
+      <p class="muted">Top-performing fantasy teams and users ranked by team score.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>User</th>
+              <th>Team</th>
+              <th>Tournament</th>
+              <th>Captain</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboardBody">
+            <tr><td colspan="6" class="muted">No teams found. Create teams in Team Management.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>

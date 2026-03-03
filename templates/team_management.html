@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block title %}Fantasy Team Management - CricketHub{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="fas fa-chess-king"></i> Fantasy Team Management</h1>
+    <div class="team-summary">
+        <span class="credits-badge">
+            <i class="fas fa-coins"></i> 
+            Credits: {{ team.used_credits }}/{{ team.total_credits }}
+        </span>
+        <span class="players-badge">
+            <i class="fas fa-users"></i> 
+            Players: {{ team.players|length }}/11
+        </span>
+    </div>
+</div>
+
+{% if error %}
+<div class="alert alert-error">
+    <i class="fas fa-exclamation-circle"></i> {{ error }}
+</div>
+{% endif %}
+
+<div class="fantasy-container">
+    <div class="current-team-section">
+        <div class="team-card">
+            <div class="team-header">
+                <h2>{{ team.name }}</h2>
+                <div class="team-actions">
+                    <button class="btn btn-small" onclick="editTeamName()">
+                        <i class="fas fa-edit"></i> Rename
+                    </button>
+                </div>
+            </div>
+            
+            {% if team.players %}
+            <div class="team-formation">
+                <div class="formation-field">
+                    {% for player in team.players %}
+                    <div class="formation-player {{ player.role|lower|replace(' ', '-') }}" data-player-id="{{ player.id }}">
+                        <div class="player-shirt">
+                            {% if team.captain == player.id %}
+                            <span class="captain-armband">C</span>
+                            {% elif team.vice_captain == player.id %}
+                            <span class="vice-armband">VC</span>
+                            {% endif %}
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="formation-name">{{ player.name.split(' ')[0] }}</span>
+                        <span class="formation-role">{{ player.role }}</span>
+                        <form method="POST" class="remove-form">
+                            <input type="hidden" name="action" value="remove">
+                            <input type="hidden" name="player_id" value="{{ player.id }}">
+                            <button type="submit" class="remove-btn"><i class="fas fa-times"></i></button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                    
+                    {% for i in range(11 - team.players|length) %}
+                    <div class="formation-player empty">
+                        <div class="player-shirt empty-shirt">+</div>
+                        <span class="formation-name">Empty</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="team-stats">
+                <div class="stat-box">
+                    <span class="stat-label">Batsmen</span>
+                    <span class="stat-value">{{ team.players|selectattr('role', 'equalto', 'Batsman')|list|length }}</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Bowlers</span>
+                    <span class="stat-value">{{ team.players|selectattr('role', 'equalto', 'Bowler')|list|length }}</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">All-rounders</span>
+                    <span class="stat-value">{{ team.players|selectattr('role', 'equalto', 'All-rounder')|list|length }}</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Wicket-keepers</span>
+                    <span class="stat-value">{{ team.players|selectattr('role', 'equalto', 'Wicket-keeper')|list|length }}</span>
+                </div>
+            </div>
+            {% if report and not report.error %}
+            <div class="team-report">
+                <h3>Team Report</h3>
+                <p><strong>Credits used:</strong> {{ team.used_credits }} / {{ team.total_credits }}<br>
+                   <strong>Remaining credits:</strong> {{ report.remaining_credits }}</p>
+                <p><strong>Composition valid:</strong> {{ 'Yes' if report.valid else 'No' }}</p>
+                <p><strong>Estimated strength:</strong> {{ report.total_points }} points</p>
+                <p><strong>Chance vs sample leaderboard:</strong> {{ report.chance_description }}</p>
+                <ul class="report-player-list">
+                    {% for p in team.players %}
+                    <li>{{ p.name }} ({{ p.role }}) - {{ p.credits }} CR - {{ p.points or 0 }} pts</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            {% else %}
+            <div class="empty-team">
+                <i class="fas fa-users-slash"></i>
+                <p>Your team is empty. Add players from the list below!</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="player-pool-section">
+        <div class="pool-header">
+            <h2>Available Players</h2>
+            <div class="pool-filters">
+                <select id="roleFilter" onchange="filterPlayers()">
+                    <option value="all">All Roles</option>
+                    <option value="Batsman">Batsmen</option>
+                    <option value="Bowler">Bowlers</option>
+                    <option value="All-rounder">All-rounders</option>
+                    <option value="Wicket-keeper">Wicket-keepers</option>
+                </select>
+                <select id="teamFilter" onchange="filterPlayers()">
+                    <option value="all">All Teams</option>
+                    <option value="India">India</option>
+                    <option value="Australia">Australia</option>
+                    <option value="England">England</option>
+                    <option value="New Zealand">New Zealand</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="players-pool-grid">
+            {% for player in available_players %}
+            <div class="pool-player-card" data-role="{{ player.role }}" data-team="{{ player.team }}">
+                <div class="pool-player-info">
+                    <h4>{{ player.name }}</h4>
+                    <span class="pool-team">{{ player.team }}</span>
+                    <span class="pool-role">{{ player.role }}</span>
+                </div>
+                <div class="pool-player-credits">
+                    <span class="credits">{{ player.credits }} CR</span>
+                </div>
+                <form method="POST">
+                    <input type="hidden" name="action" value="add">
+                    <input type="hidden" name="player_id" value="{{ player.id }}">
+                    {% set already = player.id in team.players|map(attribute='id')|list %}
+                    {% set team_size = team.players|length %}
+                    {% set team_credits = team.used_credits %}
+                    {% set role_count = team.players|selectattr('role','equalto', player.role)|list|length %}
+                    {% set same_team_count = team.players|selectattr('team','equalto', player.team)|list|length %}
+                    {% set credit_ok = (team_credits + player.credits) <= team.total_credits %}
+                    {% set role_ok = true %}
+                    {% if player.role == 'Wicket-keeper' and role_count >= 2 %}
+                        {% set role_ok = false %}
+                    {% elif player.role != 'Wicket-keeper' and role_count >= 4 %}
+                        {% set role_ok = false %}
+                    {% endif %}
+                    {% set team_ok = same_team_count < 4 %}
+                    {% set can_add = not already and team_size < 11 and credit_ok and role_ok and team_ok %}
+                    <button type="submit" class="btn btn-add" {% if not can_add %}disabled{% endif %} title="{% if not can_add %}Cannot add{% if already %} – already selected{% elif team_size >=11 %} – team full{% elif not credit_ok %} – insufficient credits{% elif not role_ok %} – role limit reached{% elif not team_ok %} – max players from {{ player.team }} reached{% endif %}{% endif %}">
+                        <i class="fas fa-plus"></i> Add
+                    </button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="fantasy-rules">
+    <h3><i class="fas fa-info-circle"></i> Fantasy Rules</h3>
+    <ul>
+        <li>Select exactly 11 players</li>
+        <li>Maximum 4 players from one team</li>
+        <li>Must include: 1-2 Wicket-keepers, 3-6 Batsmen, 3-6 Bowlers, 1-4 All-rounders</li>
+        <li>Total credits cannot exceed 100</li>
+        <li>Choose 1 Captain (2x points) and 1 Vice-Captain (1.5x points)</li>
+    </ul>
+</div>
+{% endblock %}

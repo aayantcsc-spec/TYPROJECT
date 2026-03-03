@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}Match Prediction - CricketHub{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="fas fa-brain"></i> AI Match Prediction</h1>
+    <p>Machine learning powered match outcome predictions</p>
+</div>
+
+<div class="prediction-container">
+    <div class="prediction-form-section">
+        <div class="form-card">
+            <h2>Select Match Details</h2>
+            <form method="POST" action="{{ url_for('match_prediction') }}" id="predictionForm">
+                <div class="form-group">
+                    <label for="team1">Team 1</label>
+                    <select name="team1" id="team1" required>
+                        <option value="">Select Team</option>
+                        {% for team in teams %}
+                        <option value="{{ team }}">{{ team }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="team2">Team 2</label>
+                    <select name="team2" id="team2" required>
+                        <option value="">Select Team</option>
+                        {% for team in teams %}
+                        <option value="{{ team }}">{{ team }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="venue">Venue</label>
+                    <select name="venue" id="venue" required>
+                        <option value="">Select Venue</option>
+                        {% for venue in venues %}
+                        <option value="{{ venue }}">{{ venue }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="format">Match Format</label>
+                    <select name="format" id="format">
+                        <option value="T20">T20</option>
+                        <option value="ODI" selected>ODI</option>
+                        <option value="Test">Test</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-large">
+                    <i class="fas fa-calculator"></i> Predict Outcome
+                </button>
+            </form>
+        </div>
+    </div>
+
+    {% if prediction %}
+    <div class="prediction-results">
+        <div class="result-card">
+            <div class="prediction-header">
+                <h2>Prediction Results</h2>
+                <span class="confidence-badge">{{ prediction.confidence }}% Confidence</span>
+            </div>
+            
+            <div class="matchup-display">
+                <div class="team-prediction {% if prediction.team1.win_probability > prediction.team2.win_probability %}favorite{% endif %}">
+                    <div class="team-name-large">{{ prediction.team1.name }}</div>
+                    <div class="probability-circle">
+                        <svg viewBox="0 0 36 36" class="circular-chart">
+                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path class="circle" stroke-dasharray="{{ prediction.team1.win_probability }}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        </svg>
+                        <div class="percentage">{{ prediction.team1.win_probability }}%</div>
+                    </div>
+                    {% if prediction.team1.predicted_score %}
+                    <div class="predicted-score">Predicted: {{ prediction.team1.predicted_score }} runs</div>
+                    {% endif %}
+                </div>
+                
+                <div class="vs-divider-large">VS</div>
+                
+                <div class="team-prediction {% if prediction.team2.win_probability > prediction.team1.win_probability %}favorite{% endif %}">
+                    <div class="team-name-large">{{ prediction.team2.name }}</div>
+                    <div class="probability-circle">
+                        <svg viewBox="0 0 36 36" class="circular-chart">
+                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path class="circle" stroke-dasharray="{{ prediction.team2.win_probability }}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        </svg>
+                        <div class="percentage">{{ prediction.team2.win_probability }}%</div>
+                    </div>
+                    {% if prediction.team2.predicted_score %}
+                    <div class="predicted-score">Predicted: {{ prediction.team2.predicted_score }} runs</div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="prediction-favorite">
+                <i class="fas fa-star"></i>
+                <span>Favorite: <strong>{{ prediction.favorite }}</strong></span>
+            </div>
+            
+            <div class="key-factors">
+                <h3><i class="fas fa-key"></i> Key Factors</h3>
+                <ul>
+                    {% for factor in prediction.key_factors %}
+                    <li><i class="fas fa-check"></i> {{ factor }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div class="prediction-meta">
+                <span>Generated: {{ prediction.timestamp }}</span>
+                <span>Format: {{ prediction.match_format }}</span>
+                <span>Venue: {{ prediction.venue_advantage }}</span>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<div class="prediction-info">
+    <div class="info-card">
+        <i class="fas fa-info-circle"></i>
+        <h3>How It Works</h3>
+        <p>Our prediction model analyzes historical data, team rankings, player form, venue statistics, and head-to-head records to generate accurate match predictions.</p>
+    </div>
+    <div class="info-card">
+        <i class="fas fa-chart-bar"></i>
+        <h3>Accuracy</h3>
+        <p>Machine learning algorithms continuously improve prediction accuracy by learning from past match outcomes and adjusting weights accordingly.</p>
+    </div>
+</div>
+{% endblock %}

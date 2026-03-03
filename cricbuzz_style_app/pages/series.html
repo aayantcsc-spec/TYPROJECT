@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Series & Tournament</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+  <header class="top-nav">
+    <a class="brand" href="../index.html">CricView</a>
+    <nav class="menu" id="topMenu"><a href="series.html">Series</a><a href="points-table.html">Points Table</a><a href="match.html">Matches</a></nav>
+    <button class="icon-btn theme-toggle">🌓</button>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Series Overview Page</h2>
+      <div class="row">
+        <p class="muted">Explore active and upcoming cricket series.</p>
+        <select id="seriesGenderFilter">
+          <option value="all">All Tournaments</option>
+          <option value="men">Male Tournaments</option>
+          <option value="women">Female Tournaments</option>
+        </select>
+      </div>
+    </section>
+
+    <section id="seriesGrid" class="grid"></section>
+
+    <section class="card">
+      <h2>Tournament Page</h2>
+      <p id="tournamentGenderInfo" class="muted">Brackets, fixtures, and stage progress UI block.</p>
+      <a class="btn" href="points-table.html">Open Points Table View</a>
+    </section>
+  </main>
+
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>

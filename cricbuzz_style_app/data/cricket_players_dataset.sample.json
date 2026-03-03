@@ -1,0 +1,30 @@
+[
+  {
+    "id": "kaggle_sample_1",
+    "name": "Virat Kohli",
+    "country": "India",
+    "gender": "men",
+    "source": "kaggle",
+    "battingAverage": 57.32,
+    "bowlingAverage": null,
+    "strikeRate": 93.62,
+    "economy": null,
+    "role": "Top-order Batter",
+    "battingStyle": "Right-hand bat",
+    "bowlingStyle": "Right-arm medium"
+  },
+  {
+    "id": "kaggle_sample_2",
+    "name": "Smriti Mandhana",
+    "country": "India",
+    "gender": "women",
+    "source": "kaggle",
+    "battingAverage": 43.1,
+    "bowlingAverage": null,
+    "strikeRate": 86.5,
+    "economy": null,
+    "role": "Opening Batter",
+    "battingStyle": "Left-hand bat",
+    "bowlingStyle": "Right-arm offbreak"
+  }
+]

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fantasy Team Management</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+  <header class="top-nav">
+    <a class="brand" href="../index.html">CricView</a>
+    <nav class="menu" id="topMenu">
+      <a href="team-management.html">Team Management</a>
+      <a href="prediction.html">Prediction</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="player.html">Live Player Data</a>
+    </nav>
+    <button class="icon-btn theme-toggle">🌓</button>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Team Management</h2>
+      <form id="fantasyTeamForm" class="row">
+        <input id="fantasyTeamName" type="text" placeholder="Fantasy Team Name" required />
+        <select id="fantasyTournamentGender">
+          <option value="all">All Tournaments</option>
+          <option value="men">Male Tournaments</option>
+          <option value="women">Female Tournaments</option>
+        </select>
+        <select id="fantasyTournamentSelect">
+          <option value="all">All Tournaments</option>
+        </select>
+        <select id="fantasyCaptainSelect">
+          <option value="">Select Captain</option>
+        </select>
+        <select id="fantasyViceCaptainSelect">
+          <option value="">Select Vice-Captain</option>
+        </select>
+        <button class="btn" type="submit">Create Team</button>
+      </form>
+      <p class="muted">Pick players from the pool below, then create and manage your fantasy teams.</p>
+    </section>
+
+    <section class="card">
+      <h3>Player Pool</h3>
+      <div class="row">
+        <input id="playerPoolSearch" type="text" placeholder="Search players" />
+        <select id="fantasyGenderFilter">
+          <option value="all">All Cricketers</option>
+          <option value="men">Men</option>
+          <option value="women">Women</option>
+        </select>
+      </div>
+      <div id="playerPool" class="grid"></div>
+    </section>
+
+    <section class="card">
+      <h3>My Fantasy Teams</h3>
+      <div id="myFantasyTeams" class="grid"></div>
+    </section>
+  </main>
+
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>
